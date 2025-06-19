@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/light_background"
+    android:focusableInTouchMode="true">
+
+    <!-- User Progress Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/header_background"
+        android:padding="16dp"
+        android:elevation="6dp"
+        android:layout_marginBottom="16dp">
+
+        <!-- Level and Streak -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/levelView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Level: 1"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/primary_text"/>
+
+            <TextView
+                android:id="@+id/streakView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="🔥 0 days"
+                android:textSize="18sp"
+                android:textColor="@color/primary_text"
+                android:drawablePadding="4dp"/>
+        </LinearLayout>
+
+        <!-- XP Progress Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingVertical="4dp">
+
+            <TextView
+                android:id="@+id/xpView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="XP: 0"
+                android:textSize="16sp"
+                android:textColor="@color/secondary_text"
+                android:layout_marginEnd="8dp"
+                tools:text="XP: 250"/>
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:progress="0"
+                android:max="100"
+                android:progressTint="@color/progress_color"
+                android:progressBackgroundTint="@color/progress_background"
+                android:indeterminate="false"/>
+
+            <TextView
+                android:id="@+id/nextLevelView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100 XP"
+                android:textSize="12sp"
+                android:textColor="@color/secondary_text"
+                android:layout_marginStart="8dp"
+                tools:text="100 XP"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Leaderboard Button (Moved outside ProgressBar section) -->
+    <Button
+        android:id="@+id/leaderboardBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View Leaderboard"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/blue"/>
+
+    <!-- Daily Challenge Card -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/dailyChallengeCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/purple_500"
+        android:layout_marginBottom="16dp"
+        android:visibility="gone"
+        app:cardCornerRadius="8dp"
+        app:strokeColor="@color/white"
+        app:strokeWidth="1dp">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:src="@drawable/ic_trophy"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="12dp"
+                app:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/dailyChallengeTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:text="Daily Challenge: Two Sum"/>
+
+            <Button
+                android:id="@+id/dailyChallengeBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Solve →"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/green"
+                android:paddingHorizontal="16dp"/>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Topic Filter Section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Filter by Topic:"
+            android:textSize="14sp"
+            android:textColor="@color/secondary_text"
+            android:layout_marginBottom="4dp"/>
+
+        <Spinner
+            android:id="@+id/topicSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/spinner_bg"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:textSize="16sp"
+            android:popupBackground="@drawable/spinner_popup_bg"
+            android:spinnerMode="dropdown"/>
+    </LinearLayout>
+
+    <!-- Questions List -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingTop="4dp"
+        android:paddingBottom="16dp"
+        android:scrollbars="vertical"/>
+
+    <!-- Empty State View -->
+    <TextView
+        android:id="@+id/emptyStateView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="No questions found\nTry changing your filter"
+        android:textSize="18sp"
+        android:textColor="@color/secondary_text"
+        android:visibility="gone"
+        tools:visibility="visible"/>
+</LinearLayout>

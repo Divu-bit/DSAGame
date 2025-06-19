@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Ace Editor</title>
+    <style>
+        html, body { height: 100%; margin: 0; }
+        #editor { position: absolute; top: 0; bottom: 0; left: 0; right: 0; }
+    </style>
+</head>
+<body>
+<div id="editor">// Hello DSA Champion</div>
+<script src="ace.js"></script>
+<script src="mode-java.js"></script>
+<script src="theme-monokai.js"></script>
+<script src="worker-java.js"></script>
+<script src="ext-language_tools.js"></script>
+<script>
+    const editor = ace.edit("editor");
+    editor.setTheme("ace/theme/monokai");
+    editor.session.setMode("ace/mode/java");
+    editor.setOptions({ enableBasicAutocompletion: true, enableLiveAutocompletion: true });
+    editor.session.on('change', function () {
+        if (window.Android && window.Android.updateText) {
+            window.Android.updateText(editor.getValue());
+        }
+    });
+</script>
+</body>
+</html>

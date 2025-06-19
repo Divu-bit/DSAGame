@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="green">#4CAF50</color>
+    <color name="blue">#2196F3</color>
+    <color name="red">#F44336</color>
+    <color name="purple_500">#9C27B0</color>
+    <color name="light_background">#F8F9FA</color>
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#757575</color>
+    <color name="progress_color">#9C27B0</color>
+    <color name="progress_background">#E0E0E0</color>
+    <!-- Add these inside the <resources> tag -->
+    <!-- Difficulty text colors -->
+    <color name="easy_text">#2E7D32</color>   <!-- Dark green -->
+    <color name="medium_text">#F57F17</color>  <!-- Dark amber -->
+    <color name="hard_text">#C62828</color>    <!-- Dark red -->
+    <color name="grey_200">#EEEEEE</color>
+    <color name="white">#FFFFFF</color>
+</resources>
