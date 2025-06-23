@@ -19,13 +19,43 @@
         android:elevation="6dp"
         android:layout_marginBottom="16dp">
 
+        <!-- New User Header with Welcome and Logout -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingBottom="8dp"
+            android:background="@color/blue">
+
+            <TextView
+                android:id="@+id/welcomeText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Welcome, User!"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:paddingStart="8dp"/>
+
+            <Button
+                android:id="@+id/logoutButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Logout"
+                android:backgroundTint="@color/red"
+                android:textColor="@android:color/white"
+                android:paddingHorizontal="16dp"/>
+        </LinearLayout>
+
         <!-- Level and Streak -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp">
 
             <TextView
                 android:id="@+id/levelView"
@@ -89,7 +119,7 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!-- Leaderboard Button (Moved outside ProgressBar section) -->
+    <!-- Leaderboard Button -->
     <Button
         android:id="@+id/leaderboardBtn"
         android:layout_width="match_parent"

@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    id 'com.google.gms.google-services'  // Google Services plugin
 }
 
 android {
@@ -27,6 +28,20 @@ android {
     }
 }
 
+android {
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+android {
+    defaultConfig {
+        multiDexEnabled true
+    }
+}
 dependencies {
     // UI Components
     implementation libs.appcompat
@@ -44,13 +59,27 @@ dependencies {
     implementation libs.room.runtime
     annotationProcessor libs.roomCompiler
 
-
     // Lifecycle Components
     implementation libs.lifecycle.viewmodel
     implementation libs.lifecycle.livedata
 
     // Joda Time
     implementation libs.joda.time
+
+
+    // Firebase
+    implementation platform('com.google.firebase:firebase-bom:33.0.0')
+    implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.firebaseui:firebase-ui-auth:8.0.2'
+    implementation 'com.google.android.gms:play-services-auth'
+    implementation 'com.google.android.gms:play-services-auth-api-phone'
+    implementation 'com.google.android.gms:play-services-base'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation 'com.google.firebase:firebase-database:21.0.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.0'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.8.0'
+    implementation 'androidx.activity:activity-ktx:1.9.0'
+    implementation libs.multidex
 
     // Ace Editor: Offline version used (no dependency needed)
 }

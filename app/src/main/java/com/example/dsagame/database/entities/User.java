@@ -8,6 +8,7 @@ public class User {
     @PrimaryKey(autoGenerate = true)
     public int id;
 
+    public String firebaseUid; // Add Firebase UID
     public int xp;
     public int level;
     public int streak;

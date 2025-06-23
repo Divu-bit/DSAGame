@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "105087019353",
+    "project_id": "dsagame-2634a",
+    "storage_bucket": "dsagame-2634a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:105087019353:android:c2a5d1fa39b72184ce4448",
+        "android_client_info": {
+          "package_name": "com.example.dsagame"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "105087019353-0komv6hcrd8ue9022q9k50nqs25mq18p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.dsagame",
+            "certificate_hash": "fd24b992ac0175e9e9358cedd4222a49ab2cf3dc"
+          }
+        },
+        {
+          "client_id": "105087019353-gvn1rrj7nn3jto22km1f466sta12mnd2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOFSvyx4pTEL-bU5wKFwb8g90Vp5NU7Gc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "105087019353-gvn1rrj7nn3jto22km1f466sta12mnd2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

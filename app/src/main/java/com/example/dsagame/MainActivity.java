@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -31,11 +32,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dsagame.activities.CodeEditorActivity;
 import com.example.dsagame.activities.LeaderboardActivity;
+import com.example.dsagame.activities.LoginActivity;
 import com.example.dsagame.adapter.QuestionAdapter;
 import com.example.dsagame.database.AppDatabase;
 import com.example.dsagame.database.entities.Question;
 import com.example.dsagame.database.entities.User;
 import com.example.dsagame.models.LevelUtils;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.joda.time.LocalDate;
 
@@ -59,9 +63,9 @@ public class MainActivity extends AppCompatActivity {
     AppDatabase db;
 
     // UI elements
-    TextView xpView, levelView, streakView, dailyChallengeTitle;
+    TextView xpView, levelView, streakView, dailyChallengeTitle, welcomeText;
     ProgressBar progressBar;
-    Button dailyChallengeBtn;
+    Button dailyChallengeBtn, logoutButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,9 +83,29 @@ public class MainActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         dailyChallengeTitle = findViewById(R.id.dailyChallengeTitle);
         dailyChallengeBtn = findViewById(R.id.dailyChallengeBtn);
+        welcomeText = findViewById(R.id.welcomeText);
+        logoutButton = findViewById(R.id.logoutButton);
 
         Spinner topicSpinner = findViewById(R.id.topicSpinner);
         db = AppDatabase.getInstance(this);
+
+        // Set user welcome message
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            String displayName = currentUser.getDisplayName();
+            if (displayName != null && !displayName.isEmpty()) {
+                welcomeText.setText("Welcome, " + displayName);
+            } else {
+                welcomeText.setText("Welcome, Coder!");
+            }
+        } else {
+            // If no user, redirect to login
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+            return;
+        }
+
+        logoutButton.setOnClickListener(v -> logoutUser());
 
         initUser();
         initQuestions();
@@ -96,6 +120,35 @@ public class MainActivity extends AppCompatActivity {
 
         // Schedule notifications with permission checks
         scheduleNotificationsWithPermissions();
+    }
+
+    private void logoutUser() {
+        FirebaseAuth.getInstance().signOut();
+        Toast.makeText(this, "Logged out", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
+    }
+
+    private void initUser() {
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (firebaseUser == null) {
+            // User not authenticated
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+            return;
+        }
+
+        // Get or create user from Room DB
+        user = db.userDao().getUserByUid(firebaseUser.getUid());
+        if (user == null) {
+            user = new User();
+            user.firebaseUid = firebaseUser.getUid();
+            user.xp = 0;
+            user.level = 1;
+            user.streak = 0;
+            user.lastActiveDate = "";
+            db.userDao().insertUser(user);
+        }
     }
 
     private void createNotificationChannel() {
@@ -185,7 +238,7 @@ public class MainActivity extends AppCompatActivity {
         adapter.setQuestions(filteredQuestions);
 
         // Update user data
-        user = db.userDao().getUser();
+        user = db.userDao().getUserByUid(FirebaseAuth.getInstance().getCurrentUser().getUid());
         updateUserDisplay();
     }
 
@@ -342,17 +395,7 @@ public class MainActivity extends AppCompatActivity {
         adapter.setQuestions(filteredQuestions);
     }
 
-    private void initUser() {
-        user = db.userDao().getUser();
-        if (user == null) {
-            user = new User();
-            user.xp = 0;
-            user.level = 1;
-            user.streak = 0;
-            user.lastActiveDate = "";
-            db.userDao().insertUser(user);
-        }
-    }
+
 
     private void initQuestions() {
         allQuestions = db.questionDao().getAll();

@@ -19,3 +19,15 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+# Google Play Services - Core protection
+-keep class com.google.android.gms.** { *; }
+-keep class com.firebase.ui.** { *; }
+-dontwarn com.google.android.gms.**
+-dontwarn com.firebase.ui.*
+-keep class com.google.android.gms.auth.api.credentials.** { *; }
+-keep class com.firebase.ui.auth.** { *; }
+# Keep Google Play Services classes
+-keep class com.google.android.gms.** { *; }
+-dontwarn com.google.android.gms.**
+
+

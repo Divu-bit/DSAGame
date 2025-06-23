@@ -11,7 +11,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.example.dsagame.database.entities.Question;
 import com.example.dsagame.database.entities.User;
 
-@Database(entities = {User.class, Question.class}, version = 3) // Increment to version 3
+@Database(entities = {User.class, Question.class}, version = 4)
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase instance;
 
@@ -22,21 +22,29 @@ public abstract class AppDatabase extends RoomDatabase {
         if (instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(),
                             AppDatabase.class, "dsa_game_db")
-                    .fallbackToDestructiveMigration() // Will wipe DB on version change
-                    // For production, use proper migration instead:
-                    // .addMigrations(MIGRATION_2_3)
-                    .allowMainThreadQueries() // Only for demo!
+                    .addMigrations(MIGRATION_2_3, MIGRATION_3_4)
+                    .fallbackToDestructiveMigration()
+                    .allowMainThreadQueries()
                     .build();
         }
         return instance;
     }
 
-    // Migration for production (optional)
+    // Migration from version 2 to 3 (existing)
     static final Migration MIGRATION_2_3 = new Migration(2, 3) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
             // Add new testCases column
             database.execSQL("ALTER TABLE Question ADD COLUMN testCases TEXT DEFAULT ''");
+        }
+    };
+
+    // Migration from version 3 to 4 (new)
+    static final Migration MIGRATION_3_4 = new Migration(3, 4) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+            // Add firebaseUid column to User table
+            database.execSQL("ALTER TABLE User ADD COLUMN firebaseUid TEXT DEFAULT ''");
         }
     };
 }

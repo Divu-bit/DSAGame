@@ -1,7 +1,26 @@
+// In project-level build.gradle
+//buildscript {
+//    dependencies {
+//        classpath 'com.google.gms:google-services:4.4.1'  // Add this
+//    }
+//}
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.3.2' // Use latest stable version
+        classpath 'com.google.gms:google-services:4.4.1' // Add this line
+    }
+}
 // Top-level build file
 plugins {
     alias(libs.plugins.android.application) apply false
 }
+
 
 task clean(type: Delete) {
     delete rootProject.buildDir

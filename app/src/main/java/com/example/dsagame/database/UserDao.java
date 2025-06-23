@@ -13,6 +13,8 @@ import java.util.List;
 
 @Dao
 public interface UserDao {
+    @Query("SELECT * FROM User WHERE firebaseUid = :uid LIMIT 1")
+    User getUserByUid(String uid);
     @Query("SELECT * FROM User LIMIT 1")
     User getUser();
 
